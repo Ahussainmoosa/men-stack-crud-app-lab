@@ -1,4 +1,4 @@
-<!-- views/index.ejs -->
+<!-- views/cars/index.ejs -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -6,19 +6,18 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/stylesheets/style.css" />
-    <title>Fruits App</title>
+    <title>Cars App</title>
   </head>
   <body>
-    <!-- views/fruits/index.ejs -->
    <div class="index-header-div">
-    <h1>All Fruits</h1> 
-    <a class="add-fruit" href="/fruits/new">Add fruit</a>
+    <h1>All Cars</h1> 
+    <a class="add-car" href="/cars/new">Add Car</a>
     </div>
     <ul>
-     <% fruits.forEach((fruit)=> { %>
+     <% cars.forEach((car)=> { %>
      <li>
-       <a class="fruit-cards" href="/fruits/<%=fruit._id%>">
-         <%= fruit.name %>
+       <a class="car-cards" href="/cars/<%=car._id%>">
+         <%= car.name %>
        </a>
      </li>
      <% }) %>
