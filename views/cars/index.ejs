@@ -17,7 +17,7 @@
      <% cars.forEach((car)=> { %>
      <li>
        <a class="car-cards" href="/cars/<%=car._id%>">
-         <%= car.name %>
+         <%= car.name %> - <%= car.description %>
        </a>
      </li>
      <% }) %>

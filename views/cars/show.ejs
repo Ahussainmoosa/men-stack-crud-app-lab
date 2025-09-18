@@ -15,6 +15,10 @@
       <% } else { %>
         <p>This car is not ready to drive!</p>
       <% } %>
+      <p>Description:<%= car.description %></p>
+        <% if (car.image) { %>
+          <img src="<%= car.image %>" alt="<%= car.name %>" />
+        <% } %>
       <div class="car-actions">
         <form
           class="delete-form"
