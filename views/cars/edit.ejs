@@ -9,19 +9,23 @@
 <body>
   <!-- update the header -->
   <h1>Edit <%= car.name %></h1>
-  <form action="/cars/<%=car._id%>?_method=PUT" method="POST">
+  <form action="/cars/<%=car._id%>?_method=PUT" method="POST" enctype="multipart/form-data">
         <label for="name">Name:</label>
         <input type="text" name="name" id="name" value="<%= car.name %>"/>
         <label for="description">Description:</label>
         <input type="text" name="description" id="description" value="<%= car ? car.description : '' %>">
-        <label for="image">image:</label>
-        <input type="image" name="image" id="image" value="<%= car ? car.image : '' %>">
-        <label for="isReadyToEat">Ready to Drive?</label>
         <div class="checkbox-div">
+          <label for="isReadyToEat">Ready to Drive?</label>
           <input type="checkbox" name="isReadyToEat" <% if (car.isReadyToEat) { %>checked<% } %> >
-          <button type="submit">Update Car</button>
         </div>
-    </form>
+        <label for="image">Car Image:</label>
+        <input type="file" name="image" id="image">
+        <button type="submit">Update Car</button>
+  </form>
+  <h3>Image:</h3>
+  <% if (car.image) { %>
+    <img src="/uploads/<%= car.image %>" alt="<%= car.name %>" class="car-pic1">
+  <% } %>
   <a href="/cars">Back to Cars</a>
 </body>
 </html>

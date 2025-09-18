@@ -1,10 +1,9 @@
-<!-- views/cars/show.ejs -->
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><%= car.name %></title> <!-- Dynamic title based on car name -->
+    <title><%= car.name %></title>
     <link rel="stylesheet" href="/stylesheets/style.css" />
   </head>
   <body>
@@ -15,10 +14,10 @@
       <% } else { %>
         <p>This car is not ready to drive!</p>
       <% } %>
-      <p>Description:<%= car.description %></p>
-        <% if (car.image) { %>
-          <img src="<%= car.image %>" alt="<%= car.name %>" />
-        <% } %>
+      <p>Description: <%= car.description %></p>
+      <% if (car.image) { %>
+        <img src="/uploads/<%= car.image %>" alt="<%= car.name %>" class="car-pic1">
+      <% } %>
       <div class="car-actions">
         <form
           class="delete-form"

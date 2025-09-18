@@ -6,6 +6,8 @@ const app = express();
 const methodOverride = require("method-override"); 
 const morgan = require("morgan");
 const path = require("path");
+const multer  = require('multer')
+const upload = multer({ dest: 'uploads/' })
 
 //MONGODB connection
 mongoose.connect(process.env.MONGODB_URI);
@@ -21,6 +23,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(methodOverride("_method")); 
 app.use(morgan("dev"));
 app.use(express.static(path.join(__dirname, "public")));
+app.use('/uploads', express.static('uploads'));
 
  // new code above this line
 app.get("/", async (req, res) => {
@@ -55,14 +58,21 @@ app.get("/cars/:carId", async(req, res) => {
   res.render("cars/show.ejs", { car: foundCar });
 });
 
-app.post("/cars", async (req, res) => {
-  if (req.body.isReadyToEat === "on") {
-    req.body.isReadyToEat = true;
-  } else {
-    req.body.isReadyToEat = false;
+app.post("/cars", upload.single('image'), async (req, res) => {
+  const isReady = req.body.isReadyToEat === "on";
+
+  const newCarData = {
+    name: req.body.name || '',
+    description: req.body.description || '',
+    isReadyToEat: isReady
+  };
+
+  if (req.file) {
+    newCarData.image = req.file.filename; // store uploaded file name
   }
-  await Car.create(req.body);
-  res.redirect("/cars"); // redirect to index cars
+
+  await Car.create(newCarData);
+  res.redirect("/cars");
 });
 
 app.delete("/cars/:carId", async (req, res) => {
@@ -70,13 +80,16 @@ app.delete("/cars/:carId", async (req, res) => {
   res.redirect("/cars");
 });
 
-app.put("/cars/:carId", async (req, res) => {
-  if (req.body.isReadyToEat === "on") {
-    req.body.isReadyToEat = true;
-  } else {
-    req.body.isReadyToEat = false;
+app.put("/cars/:carId", upload.single('image'), async (req, res) => {
+  const isReady = req.body.isReadyToEat === "on";
+  const updatedData = {
+    ...req.body,
+    isReadyToEat: isReady
+  };
+  if (req.file) {
+    updatedData.image = req.file.filename; 
   }
-  await Car.findByIdAndUpdate(req.params.carId, req.body);
+  await Car.findByIdAndUpdate(req.params.carId, updatedData);
   res.redirect(`/cars/${req.params.carId}`);
 });
 
